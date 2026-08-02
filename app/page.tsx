@@ -44,7 +44,7 @@ export default function Home() {
 
   return <main>
     <header className="topbar">
-      <div className="brand-lockup brand-logos" aria-label="برندهای مادیران، XPoint و XVision Shop"><img src="/madiran.png" alt="لوگوی مادیران" /><span /><img src="/xpoint.svg" alt="لوگوی XPoint" /><span /><img src="/xvision-shop.png" alt="لوگوی XVision Shop" /></div>
+      <div className="brand-lockup top-xpoint" aria-label="XPoint"><img src="/xpoint.svg" alt="لوگوی XPoint" /></div>
       <div className="header-copy"><span className="eyebrow">گزارش تعاملی پروژه‌های فروشگاهی</span><h1>نقشه توسعه فروشگاه‌ها</h1><p>عملکرد سال‌های ۱۴۰۴ و ۱۴۰۵</p></div>
       <div className="header-badge"><span>به‌روزرسانی</span><b>۱۴۰۵</b></div>
     </header>
@@ -63,9 +63,10 @@ export default function Home() {
       </section>
     </section>
     <section className="project-directory"><div className="directory-heading"><div><span className="eyebrow">فهرست سریع</span><h2>شعب و پروژه‌ها</h2></div><p>{toFa(visible.length)} مورد مطابق فیلترهای انتخاب‌شده</p></div><div className="project-grid">{visible.map((item) => <button key={item.id} className="project-card" onClick={() => setSelected(item)} style={{ "--card-color": brandMeta[item.brand].color } as React.CSSProperties}><span className="card-topline"><i />{statusMeta[item.status]} · {item.year}</span><strong>{item.city}</strong><span className="card-action">{item.action}</span><span className="card-footer"><em>{brandMeta[item.brand].label}</em><i>←</i></span></button>)}</div></section>
-    <footer><div className="brand-lockup muted"><div className="brand-mark"><span /><span /><span /></div><b>گروه مادیران</b></div><p>داشبورد توسعه شبکه فروش · ۱۴۰۴–۱۴۰۵</p><a href="#top">بازگشت به بالا ↑</a></footer>
+    <footer><div className="brand-lockup brand-logos footer-logos" aria-label="برندهای مادیران، XPoint و XVision Shop"><img src="/madiran.png" alt="لوگوی مادیران" /><span /><img src="/xpoint.svg" alt="لوگوی XPoint" /><span /><img src="/xvision-shop.png" alt="لوگوی XVision Shop" /></div><p>داشبورد توسعه شبکه فروش · ۱۴۰۴–۱۴۰۵</p><a href="#top">بازگشت به بالا ↑</a></footer>
     {selected && <div className="drawer-layer" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && setSelected(null)}><aside className="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title"><button className="drawer-close" onClick={() => setSelected(null)} aria-label="بستن پنل">×</button><div className="drawer-accent" style={{ background: brandMeta[selected.brand].color }} /><div className="drawer-header"><span className="drawer-kicker">{statusMeta[selected.status]} · سال {selected.year}</span><h2 id="detail-title">{selected.city}</h2><p>{brandMeta[selected.brand].label} / {selected.action}</p></div><div className="photo-pair">{["تصویر نمای فروشگاه", "تصویر فضای داخلی"].map((label, i) => <div className="photo-placeholder" key={label}><span className="photo-icon">⌁</span><b>عکس {toFa(i + 1)}</b><small>{label}</small></div>)}</div><div className="detail-fields"><div><span>متراژ فروشگاه</span><b>تکمیل نشده</b></div><div><span>هزینه اجرا</span><b>تکمیل نشده</b></div><div><span>تاریخ تحویل / افتتاح</span><b>تکمیل نشده</b></div><div><span>نوع پروژه</span><b>{selected.action}</b></div></div><div className="point-message" style={{ "--drawer-color": brandMeta[selected.brand].color } as React.CSSProperties}><span>نقطه فروش</span><p>{selected.pointNote}</p></div>{selected.verification && <div className="verification"><b>نیازمند بررسی</b><p>{selected.verification}</p></div>}<button className="drawer-action" style={{ background: brandMeta[selected.brand].color }} onClick={() => setSelected(null)}>بازگشت به نقشه</button></aside></div>}
   </main>;
 }
+
 
 
