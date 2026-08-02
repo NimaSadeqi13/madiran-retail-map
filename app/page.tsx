@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -19,9 +19,9 @@ const projects: Project[] = [
   ...["هشتگرد", "لاهیجان", "انزلی", "اصفهان", "شهرری", "لنگرود"].map((city) => makeProject(city, "xpoint", "۱۴۰۵", "completed", "اجرای XPoint", "یک نقطه فروش در مجموع پروژه‌های XPoint سال ۱۴۰۵ افزوده شده است.", "store")),
   ...[["تبریز", "جابجایی"], ["کرج", "جابجایی"], ["نور", "تأسیس جدید"], ["زاهدان", "تأسیس جدید"], ["شهریار", "ری‌دیزاین"], ["رشت ۱", "ری‌دیزاین"], ["اهواز", "ری‌دیزاین"], ["مسجدسلیمان", "ری‌دیزاین"], ["نوشهر", "ری‌دیزاین"]].map(([city, action]) => makeProject(city, "xpoint", "۱۴۰۵", "active", action, action === "تأسیس جدید" ? "نقطه فروش جدید در حال اضافه‌شدن است." : `${action} شعبه در حال انجام است.`, "pipeline", "دسته‌بندی XPoint نیازمند تأیید نهایی است.")),
   makeProject("یزد", "xvision", "۱۴۰۵", "active", "تأسیس / توسعه", "پروژه XVision Shop در حال توسعه است."),
-  makeProject("اصفهان", "office", "۱۴۰۵", "office", "دفتر سرپرستی XPoint", "دفتر سرپرستی فعال.", "office"),
-  makeProject("تبریز", "office", "۱۴۰۵", "office", "دفتر سرپرستی XPoint", "دفتر سرپرستی فعال.", "office"),
-  makeProject("ساری", "office", "۱۴۰۵", "office", "دفتر سرپرستی", "دفتر سرپرستی فعال.", "office", "برند دفتر ساری نیازمند تأیید است."),
+  makeProject("اصفهان", "xpoint", "۱۴۰۵", "office", "دفتر سرپرستی XPoint", "دفتر سرپرستی فعال.", "office"),
+  makeProject("تبریز", "xpoint", "۱۴۰۵", "office", "دفتر سرپرستی XPoint", "دفتر سرپرستی فعال.", "office"),
+  makeProject("ساری", "madirani", "۱۴۰۵", "office", "دفتر سرپرستی مادیرانی", "دفتر سرپرستی فعال.", "office"),
 ];
 
 const brandMeta = { madirani: { label: "مادیرانی", color: "#34383d" }, xpoint: { label: "XPoint", color: "#f26a21" }, xvision: { label: "XVision Shop", color: "#2e74b5" }, office: { label: "دفتر سرپرستی", color: "#79818a" } } as const;
@@ -35,7 +35,7 @@ export default function Home() {
   const [year, setYear] = useState<"all" | "۱۴۰۴" | "۱۴۰۵">("all");
   const [status, setStatus] = useState<"all" | Status>("all");
   const [selected, setSelected] = useState<Project | null>(null);
-  const visible = useMemo(() => projects.filter((p) => (brand === "all" || p.brand === brand) && (year === "all" || p.year === year) && (status === "all" || p.status === status)), [brand, year, status]);
+  const visible = useMemo(() => projects.filter((p) => (brand === "all" || (brand === "office" ? p.status === "office" : p.brand === brand)) && (year === "all" || p.year === year) && (status === "all" || p.status === status)), [brand, year, status]);
   const completed = visible.filter((p) => p.status === "completed").length;
   const active = visible.filter((p) => p.status === "active").length;
   const offices = visible.filter((p) => p.status === "office").length;
@@ -51,7 +51,7 @@ export default function Home() {
     <section className="dashboard-shell">
       <aside className="control-panel" aria-label="فیلترهای نقشه">
         <div className="panel-heading"><span className="section-index">۰۱</span><div><h2>نمای شبکه</h2><p>فیلتر و مقایسه شعب</p></div></div>
-        <div className="filter-block"><label>نوع شبکه</label><div className="brand-filters">{(["all", "madirani", "xpoint", "xvision", "office"] as const).map((key) => <button key={key} className={`brand-filter ${brand === key ? "is-active" : ""}`} style={{ "--filter-color": key === "all" ? "#1f2024" : brandMeta[key].color } as React.CSSProperties} onClick={() => { setBrand(key); setSelected(null); }} aria-pressed={brand === key}><i /><span>{key === "all" ? "همه شبکه" : brandMeta[key].label}</span><b>{toFa(key === "all" ? projects.length : projects.filter((p) => p.brand === key).length)}</b></button>)}</div></div>
+        <div className="filter-block"><label>نوع شبکه</label><div className="brand-filters">{(["all", "madirani", "xpoint", "xvision", "office"] as const).map((key) => <button key={key} className={`brand-filter ${brand === key ? "is-active" : ""}`} style={{ "--filter-color": key === "all" ? "#1f2024" : brandMeta[key].color } as React.CSSProperties} onClick={() => { setBrand(key); setSelected(null); }} aria-pressed={brand === key}><i /><span>{key === "all" ? "همه شبکه" : brandMeta[key].label}</span><b>{toFa(key === "all" ? projects.length : key === "office" ? projects.filter((p) => p.status === "office").length : projects.filter((p) => p.brand === key).length)}</b></button>)}</div></div>
         <div className="filter-block compact"><label>سال پروژه</label><div className="segmented">{(["all", "۱۴۰۴", "۱۴۰۵"] as const).map((key) => <button key={key} className={year === key ? "is-active" : ""} onClick={() => { setYear(key); setSelected(null); }}>{key === "all" ? "همه" : key}</button>)}</div></div>
         <div className="filter-block compact"><label>وضعیت</label><div className="status-filters">{(["all", "completed", "active", "office"] as const).map((key) => <button key={key} className={status === key ? "is-active" : ""} onClick={() => { setStatus(key); setSelected(null); }}>{key === "all" ? "همه" : statusMeta[key]}</button>)}</div></div>
         <button className="reset-button" onClick={clearFilters}>پاک‌کردن فیلترها <span>↺</span></button><div className="panel-note"><span className="note-dot" /><p>برای مشاهده متراژ، هزینه، وضعیت و تصاویر روی هر نقطه کلیک کنید.</p></div>
@@ -67,3 +67,4 @@ export default function Home() {
     {selected && <div className="drawer-layer" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && setSelected(null)}><aside className="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title"><button className="drawer-close" onClick={() => setSelected(null)} aria-label="بستن پنل">×</button><div className="drawer-accent" style={{ background: brandMeta[selected.brand].color }} /><div className="drawer-header"><span className="drawer-kicker">{statusMeta[selected.status]} · سال {selected.year}</span><h2 id="detail-title">{selected.city}</h2><p>{brandMeta[selected.brand].label} / {selected.action}</p></div><div className="photo-pair">{["تصویر نمای فروشگاه", "تصویر فضای داخلی"].map((label, i) => <div className="photo-placeholder" key={label}><span className="photo-icon">⌁</span><b>عکس {toFa(i + 1)}</b><small>{label}</small></div>)}</div><div className="detail-fields"><div><span>متراژ فروشگاه</span><b>تکمیل نشده</b></div><div><span>هزینه اجرا</span><b>تکمیل نشده</b></div><div><span>تاریخ تحویل / افتتاح</span><b>تکمیل نشده</b></div><div><span>نوع پروژه</span><b>{selected.action}</b></div></div><div className="point-message" style={{ "--drawer-color": brandMeta[selected.brand].color } as React.CSSProperties}><span>نقطه فروش</span><p>{selected.pointNote}</p></div>{selected.verification && <div className="verification"><b>نیازمند بررسی</b><p>{selected.verification}</p></div>}<button className="drawer-action" style={{ background: brandMeta[selected.brand].color }} onClick={() => setSelected(null)}>بازگشت به نقشه</button></aside></div>}
   </main>;
 }
+
