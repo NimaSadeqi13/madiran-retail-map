@@ -9,7 +9,7 @@ type Project = { id: string; city: string; brand: Brand; year: "۱۴۰۴" | "۱�
 const coordinates: Record<string, [number, number]> = {
   "چالوس": [36.6506, 51.4224], "نیشابور": [36.2106, 58.7922], "رفسنجان": [30.4022, 55.9942], "تنکابن": [36.8154, 50.8787], "ورامین": [35.3283, 51.646], "خرم‌آباد": [33.4842, 48.3538], "نکا": [36.6512, 53.2965],
   "ساوه": [35.0196, 50.3652], "بندرعباس": [27.1842, 56.2893], "کلاردشت": [36.5056, 51.1588], "دزفول": [32.378, 48.4032], "هشتگرد": [35.9642, 50.6858], "لاهیجان": [37.2061, 50.0029], "انزلی": [37.4716, 49.4686], "اصفهان": [32.6708, 51.665], "شهرری": [35.5904, 51.4367], "لنگرود": [37.1956, 50.153],
-  "تبریز": [38.0739, 46.2979], "کرج": [35.8225, 50.9905], "نور": [36.5728, 52.0074], "زاهدان": [29.4907, 60.8635], "شهریار": [35.6589, 51.0586], "رشت ۱": [37.2698, 49.5895], "اهواز": [31.3231, 48.6793], "مسجدسلیمان": [31.9461, 49.3013], "نوشهر": [36.6508, 51.5034], "یزد": [31.9052, 54.3701], "ساری": [36.5537, 53.0603],
+  "تبریز": [38.0739, 46.2979], "کرج": [35.8225, 50.9905], "نور": [36.5728, 52.0074], "زاهدان": [29.4907, 60.8635], "شهریار": [35.6589, 51.0586], "رشت مطهری": [37.2698, 49.5895], "اهواز": [31.3231, 48.6793], "مسجدسلیمان": [31.9461, 49.3013], "نوشهر": [36.6508, 51.5034], "یزد": [31.9052, 54.3701], "ساری": [36.5537, 53.0603],
 };
 const makeProject = (city: string, brand: Brand, year: "۱۴۰۴" | "۱۴۰۵", status: Status, action: string, pointNote: string, suffix = "", verification?: string): Project => ({ id: `${city}-${suffix || brand}-${status}`, city, brand, year, status, action, lat: coordinates[city][0], lon: coordinates[city][1], pointNote, verification });
 const projects: Project[] = [
@@ -17,7 +17,7 @@ const projects: Project[] = [
   ...["ساوه", "بندرعباس", "کلاردشت"].map((city) => makeProject(city, "xpoint", "۱۴۰۴", "completed", "اجرای XPoint", "۲ نقطه فروش در مجموع پروژه‌های XPoint سال ۱۴۰۴ افزوده شده است.")),
   makeProject("دزفول", "xvision", "۱۴۰۴", "completed", "اجرای XVision Shop", "یک نقطه فروش جدید به شبکه افزوده شده است."),
   ...["هشتگرد", "لاهیجان", "انزلی", "اصفهان", "شهرری", "لنگرود"].map((city) => makeProject(city, "xpoint", "۱۴۰۵", "completed", "اجرای XPoint", "یک نقطه فروش در مجموع پروژه‌های XPoint سال ۱۴۰۵ افزوده شده است.", "store")),
-  ...[["تبریز", "جابجایی"], ["کرج", "جابجایی"], ["نور", "تأسیس جدید"], ["زاهدان", "تأسیس جدید"], ["شهریار", "ری‌دیزاین"], ["رشت ۱", "ری‌دیزاین"], ["اهواز", "ری‌دیزاین"], ["مسجدسلیمان", "ری‌دیزاین"], ["نوشهر", "ری‌دیزاین"]].map(([city, action]) => makeProject(city, "xpoint", "۱۴۰۵", "active", action, action === "تأسیس جدید" ? "نقطه فروش جدید در حال اضافه‌شدن است." : `${action} شعبه در حال انجام است.`, "pipeline", "دسته‌بندی XPoint نیازمند تأیید نهایی است.")),
+  ...[["تبریز", "جابجایی"], ["کرج", "جابجایی"], ["نور", "تأسیس جدید"], ["زاهدان", "تأسیس جدید"], ["شهریار", "ری‌دیزاین"], ["رشت مطهری", "ری‌دیزاین"], ["اهواز", "ری‌دیزاین"], ["مسجدسلیمان", "ری‌دیزاین"], ["نوشهر", "ری‌دیزاین"]].map(([city, action]) => makeProject(city, "xpoint", "۱۴۰۵", "active", action, action === "تأسیس جدید" ? "نقطه فروش جدید در حال اضافه‌شدن است." : `${action} شعبه در حال انجام است.`, "pipeline", "دسته‌بندی XPoint نیازمند تأیید نهایی است.")),
   makeProject("یزد", "xvision", "۱۴۰۵", "active", "تأسیس / توسعه", "پروژه XVision Shop در حال توسعه است."),
   makeProject("اصفهان", "xpoint", "۱۴۰۵", "office", "دفتر سرپرستی XPoint", "دفتر سرپرستی فعال.", "office"),
   makeProject("تبریز", "xpoint", "۱۴۰۵", "office", "دفتر سرپرستی XPoint", "دفتر سرپرستی فعال.", "office"),
@@ -67,6 +67,7 @@ export default function Home() {
     {selected && <div className="drawer-layer" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && setSelected(null)}><aside className="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title"><button className="drawer-close" onClick={() => setSelected(null)} aria-label="بستن پنل">×</button><div className="drawer-accent" style={{ background: brandMeta[selected.brand].color }} /><div className="drawer-header"><span className="drawer-kicker">{statusMeta[selected.status]} · سال {selected.year}</span><h2 id="detail-title">{selected.city}</h2><p>{brandMeta[selected.brand].label} / {selected.action}</p></div><div className="photo-pair">{["تصویر نمای فروشگاه", "تصویر فضای داخلی"].map((label, i) => <div className="photo-placeholder" key={label}><span className="photo-icon">⌁</span><b>عکس {toFa(i + 1)}</b><small>{label}</small></div>)}</div><div className="detail-fields"><div><span>متراژ فروشگاه</span><b>تکمیل نشده</b></div><div><span>هزینه اجرا</span><b>تکمیل نشده</b></div><div><span>تاریخ تحویل / افتتاح</span><b>تکمیل نشده</b></div><div><span>نوع پروژه</span><b>{selected.action}</b></div></div><div className="point-message" style={{ "--drawer-color": brandMeta[selected.brand].color } as React.CSSProperties}><span>نقطه فروش</span><p>{selected.pointNote}</p></div>{selected.verification && <div className="verification"><b>نیازمند بررسی</b><p>{selected.verification}</p></div>}<button className="drawer-action" style={{ background: brandMeta[selected.brand].color }} onClick={() => setSelected(null)}>بازگشت به نقشه</button></aside></div>}
   </main>;
 }
+
 
 
 
