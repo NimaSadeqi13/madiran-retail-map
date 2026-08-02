@@ -75,7 +75,7 @@ export default function Home() {
   return <main>
     <header className="topbar">
       <div className="brand-lockup top-xpoint" aria-label="XPoint"><img src="/xpoint.svg" alt="لوگوی XPoint" /></div>
-      <div className="header-copy"><span className="eyebrow">گزارش تعاملی پروژه‌های فروشگاهی</span><h1>نقشه توسعه فروشگاه‌ها</h1><p>عملکرد سال‌های ۱۴۰۴ و ۱۴۰۵</p></div>
+      <div className="header-copy"><h1>نقشه توسعه فروشگاه‌ها</h1><p>عملکرد سال‌های ۱۴۰۴ و ۱۴۰۵</p></div>
       <div className="header-badge"><span>به‌روزرسانی</span><b>۱۴۰۵</b></div>
     </header>
     <section className="dashboard-shell">
