@@ -43,8 +43,29 @@ const contracts: Record<string, Contract> = {
   "رشت مطهری": { area: "50", deposit: "700 میلیون تومان", address: "خیابان مطهری، نبش ساغری‌سازان", phone: "013-44971000", photo1: "/stores/rasht-1.png", photo2: "/stores/rasht-2.png" },
 };
 
+const projectMedia: Record<string, Contract> = {
+  "هشتگرد": { beforePhoto1: "/media/hashtgerd/before-1.jpg", beforePhoto2: "/media/hashtgerd/before-2.jpg", renderVideo: "/media/hashtgerd/render.mp4" },
+  "بندرعباس": { beforePhoto1: "/media/bandar-abbas/before-1.jpg", beforePhoto2: "/media/bandar-abbas/before-2.jpg", renderVideo: "/media/bandar-abbas/render.mp4" },
+  "کلاردشت": { beforePhoto1: "/media/kelardasht/before-1.jpeg", beforePhoto2: "/media/kelardasht/before-2.jpeg", renderVideo: "/media/kelardasht/render.mp4" },
+  "انزلی": { beforePhoto1: "/media/anzali/before-1.jpg", beforePhoto2: "/media/anzali/before-2.jpg", renderVideo: "/media/anzali/render.mp4" },
+  "اصفهان": { beforePhoto1: "/media/isfahan/before-1.jpg", beforePhoto2: "/media/isfahan/before-2.jpg", renderVideo: "/media/isfahan/render.mp4" },
+  "شهرری": { beforePhoto1: "/media/shahr-rey/before-1.jpg", beforePhoto2: "/media/shahr-rey/before-2.jpg", renderVideo: "/media/shahr-rey/render.mp4" },
+  "لاهیجان": { beforePhoto1: "/media/lahijan/before-1.jpg", beforePhoto2: "/media/lahijan/before-2.png", renderVideo: "/media/lahijan/render.mp4" },
+  "تبریز": { beforePhoto1: "/media/tabriz/before-1.jpg", beforePhoto2: "/media/tabriz/before-2.jpg", renderVideo: "/media/tabriz/render.mp4" },
+  "لنگرود": { beforePhoto1: "/media/langarud/before-1.jpg", beforePhoto2: "/media/langarud/before-2.jpg", renderVideo: "/media/langarud/render.mp4" },
+  "رشت مطهری": { beforePhoto1: "/media/rasht/before-1.jpg", beforePhoto2: "/media/rasht/before-2.jpg" },
+  "دزفول": { beforePhoto1: "/media/dezful/before-1.jpg", beforePhoto2: "/media/dezful/before-2.jpg" },
+  "نیشابور": { beforePhoto1: "/media/nishapur/before-1.jpeg", beforePhoto2: "/media/nishapur/before-2.jpeg" },
+  "رفسنجان": { beforePhoto1: "/media/rafsanjan/before-1.jpeg", beforePhoto2: "/media/rafsanjan/before-2.jpeg" },
+  "تنکابن": { beforePhoto1: "/media/tonekabon/before-1.jpeg", beforePhoto2: "/media/tonekabon/before-2.jpeg" },
+  "ورامین": { beforePhoto1: "/media/varamin/before-1.jpg", beforePhoto2: "/media/varamin/before-2.jpg", renderVideo: "/media/varamin/render.mp4" },
+  "نکا": { beforePhoto1: "/media/neka/before-1.jpg", beforePhoto2: "/media/neka/before-2.jpg" },
+  "خرم‌آباد": { beforePhoto1: "/media/khorramabad/before-1.jpg", beforePhoto2: "/media/khorramabad/before-2.jpg" },
+  "ساوه": { beforePhoto1: "/media/saveh/before-1.jpg", beforePhoto2: "/media/saveh/before-2.jpg" },
+};
+
 const supervisoryCities = new Set(["\u0627\u0635\u0641\u0647\u0627\u0646", "\u062a\u0628\u0631\u06cc\u0632", "\u0633\u0627\u0631\u06cc"]);
-const makeProject = (city: string, brand: Brand, year: "۱۴۰۴" | "۱۴۰۵", status: Status, action: string, pointNote: string, suffix = "", verification?: string): Project => ({ id: `${city}-${suffix || brand}-${status}`, city, brand, year, status, action, lat: coordinates[city][0], lon: coordinates[city][1], pointNote, supervision: supervisoryCities.has(city), verification, ...(contracts[city] ?? {}) });
+const makeProject = (city: string, brand: Brand, year: "۱۴۰۴" | "۱۴۰۵", status: Status, action: string, pointNote: string, suffix = "", verification?: string): Project => ({ id: `${city}-${suffix || brand}-${status}`, city, brand, year, status, action, lat: coordinates[city][0], lon: coordinates[city][1], pointNote, supervision: supervisoryCities.has(city), verification, ...(contracts[city] ?? {}), ...(projectMedia[city] ?? {}) });
 const projects: Project[] = [
   ...["چالوس", "نیشابور", "رفسنجان", "تنکابن", "ورامین", "خرم‌آباد", "نکا"].map((city) => makeProject(city, "madirani", "۱۴۰۴", "completed", "اجرای فروشگاه", "۴ نقطه فروش در مجموع این گروه افزوده شده است؛ تخصیص شعبه‌ای تکمیل نشده.")),
   ...["ساوه", "بندرعباس", "کلاردشت"].map((city) => makeProject(city, "xpoint", "۱۴۰۴", "completed", "اجرای XPoint", "۲ نقطه فروش در مجموع پروژه‌های XPoint سال ۱۴۰۴ افزوده شده است.")),
