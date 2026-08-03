@@ -124,4 +124,5 @@ footer .footer-logos{padding:7px 12px;border-radius:14px;box-shadow:none;backgro
 .supervision-pin { position:absolute; right:-5px; top:-7px; z-index:3; min-width:16px; height:16px; display:grid; place-items:center; padding:0 3px; border:1px solid rgba(31,32,36,.28); border-radius:6px; background:#fff; color:var(--ink); box-shadow:0 4px 10px rgba(31,32,36,.2); font-size:8px; font-weight:950; }
 .supervision-badge { align-self:flex-start; margin-top:9px; padding:5px 8px; border:1px solid rgba(46,116,181,.22); border-radius:8px; background:rgba(46,116,181,.08); color:var(--blue); font-size:8px; font-weight:900; }
 .drawer-supervision { display:inline-flex; margin-top:10px; padding:6px 10px; border:1px solid rgba(46,116,181,.22); border-radius:9px; background:rgba(46,116,181,.08); color:var(--blue); font-size:9px; font-weight:900; }
-.supervision-note { border-color:rgba(46,116,181,.3); background:linear-gradient(135deg,#f3f8fc,#fff); }
+
+.status-message p { font-size:11px; font-weight:750; color:var(--ink); }
