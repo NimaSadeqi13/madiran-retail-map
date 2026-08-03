@@ -57,6 +57,7 @@ const projects: Project[] = [
 
 const brandMeta = { madirani: { label: "مادیرانی", color: "#34383d" }, xpoint: { label: "XPoint", color: "#f26a21" }, xvision: { label: "XVision Shop", color: "#2e74b5" }, office: { label: "دفتر سرپرستی", color: "#79818a" } } as const;
 const statusMeta = { completed: "اجراشده", active: "در حال توسعه", office: "دفتر سرپرستی" } as const;
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const toFa = (value: number | string) => String(value).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
 function projectPoint(lat: number, lon: number) { const merc = (v: number) => Math.log(Math.tan(Math.PI / 4 + (v * Math.PI / 180) / 2)); return { left: `${Math.max(2, Math.min(98, ((lon - 44) / 19.35) * 100))}%`, top: `${Math.max(2, Math.min(98, ((merc(39.85) - merc(lat)) / (merc(39.85) - merc(24.75))) * 100))}%` }; }
 function Metric({ value, label, tone }: { value: number; label: string; tone: string }) { return <div className="metric"><span className="metric-value" style={{ color: tone }}>{toFa(value)}</span><span className="metric-label">{label}</span></div>; }
@@ -71,6 +72,7 @@ export default function Home() {
   const active = visible.filter((p) => p.status === "active").length;
   const offices = visible.filter((p) => p.status === "office").length;
   useEffect(() => { const close = (e: KeyboardEvent) => e.key === "Escape" && setSelected(null); window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, []);
+  useEffect(() => { if (!publicBasePath) return; document.querySelectorAll<HTMLImageElement>('img[src^="/"]').forEach((image) => { const source = image.getAttribute("src"); if (source && !source.startsWith(publicBasePath)) image.src = `${publicBasePath}${source}`; }); }, [selected]);
   const clearFilters = () => { setBrand("all"); setYear("all"); setStatus("all"); };
 
   return <main>
