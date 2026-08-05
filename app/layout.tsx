@@ -6,6 +6,7 @@ const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const metadata: Metadata = {
   title: "نقشه توسعه فروشگاه‌های مادیران",
   description: "گزارش تعاملی پروژه‌های فروشگاهی مادیرانی، XPoint و XVision Shop در سال‌های ۱۴۰۴ و ۱۴۰۵",
+  robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } },
   icons: { icon: `${publicBasePath}/favicon.svg`, shortcut: `${publicBasePath}/favicon.svg` },
 };
 
