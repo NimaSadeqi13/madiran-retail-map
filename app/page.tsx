@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 type Brand = "madirani" | "xpoint" | "xvision" | "exhibition";
 type Status = "completed" | "active";
 type Contract = { leaseStart?: string; leaseEnd?: string; owner?: string; rent?: string; increase?: number; area?: string; deposit?: string; address?: string; phone?: string; facilityNote?: string; photo1?: string; photo2?: string; beforePhoto1?: string; beforePhoto2?: string; renderVideo?: string; executedVideo?: string; openingDate?: string; contractNote?: string };
-type Project = { id: string; city: string; brand: Brand; year: "۱۴۰۴" | "۱۴۰۵"; status: Status; action: string; lat: number; lon: number; pointNote: string; supervision?: boolean; verification?: string; hideBefore?: boolean; description?: string } & Contract;
+type Project = { id: string; city: string; brand: Brand; year: "۱۴۰۱" | "۱۴۰۴" | "۱۴۰۵"; status: Status; action: string; lat: number; lon: number; pointNote: string; supervision?: boolean; verification?: string; hideBefore?: boolean; description?: string } & Contract;
 type MediaPreview = { src: string; kind: "image" | "video"; alt: string };
 
 const coordinates: Record<string, [number, number]> = {
@@ -66,7 +66,7 @@ const projectMedia: Record<string, Contract> = {
 };
 
 const supervisoryCities = new Set(["\u0627\u0635\u0641\u0647\u0627\u0646", "\u062a\u0628\u0631\u06cc\u0632", "\u0633\u0627\u0631\u06cc"]);
-const makeProject = (city: string, brand: Brand, year: "۱۴۰۴" | "۱۴۰۵", status: Status, action: string, pointNote: string, suffix = "", verification?: string): Project => ({ id: `${city}-${suffix || brand}-${status}`, city, brand, year, status, action, lat: coordinates[city][0], lon: coordinates[city][1], pointNote, supervision: supervisoryCities.has(city), verification, ...(contracts[city] ?? {}), ...(projectMedia[city] ?? {}) });
+const makeProject = (city: string, brand: Brand, year: "۱۴۰۱" | "۱۴۰۴" | "۱۴۰۵", status: Status, action: string, pointNote: string, suffix = "", verification?: string): Project => ({ id: `${city}-${suffix || brand}-${status}`, city, brand, year, status, action, lat: coordinates[city][0], lon: coordinates[city][1], pointNote, supervision: supervisoryCities.has(city), verification, ...(contracts[city] ?? {}), ...(projectMedia[city] ?? {}) });
 const projects: Project[] = [
   ...["نیشابور", "رفسنجان", "تنکابن", "ورامین", "خرم‌آباد", "نکا"].map((city) => makeProject(city, "madirani", "۱۴۰۴", "completed", "اجرای فروشگاه", "۴ نقطه فروش در مجموع این گروه افزوده شده است؛ تخصیص شعبه‌ای تکمیل نشده.")),
   ...["ساوه", "بندرعباس", "کلاردشت"].map((city) => makeProject(city, "xpoint", "۱۴۰۴", "completed", "اجرای XPoint", "۲ نقطه فروش در مجموع پروژه‌های XPoint سال ۱۴۰۴ افزوده شده است.")),
@@ -74,7 +74,7 @@ const projects: Project[] = [
   ...["هشتگرد", "لاهیجان", "انزلی", "اصفهان", "شهرری", "لنگرود"].map((city) => makeProject(city, "xpoint", "۱۴۰۵", "completed", "اجرای XPoint", "یک نقطه فروش در مجموع پروژه‌های XPoint سال ۱۴۰۵ افزوده شده است.", "store")),
   ...[["تبریز", "جابجایی"], ["کرج", "جابجایی"], ["نور", "تأسیس جدید"], ["زاهدان", "تأسیس جدید"], ["شهریار", "ری‌دیزاین"], ["رشت مطهری", "ری‌دیزاین"], ["اهواز", "ری‌دیزاین"], ["مسجدسلیمان", "ری‌دیزاین"], ["نوشهر", "ری‌دیزاین"]].map(([city, action]) => makeProject(city, "xpoint", "۱۴۰۵", city === "تبریز" ? "completed" : "active", action, action === "تأسیس جدید" ? "نقطه فروش جدید در حال اضافه‌شدن است." : `${action} شعبه در حال انجام است.`, "pipeline", "دسته‌بندی XPoint نیازمند تأیید نهایی است.")),
   makeProject("یزد", "xvision", "۱۴۰۵", "active", "تأسیس / توسعه", "پروژه XVision Shop در حال توسعه است."),
-  makeProject("\u0633\u0627\u0631\u06cc", "madirani", "\u06f1\u06f4\u06f0\u06f5", "completed", "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0645\u0627\u062f\u06cc\u0631\u0627\u0646\u06cc", "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0641\u0639\u0627\u0644 \u0628\u0627 \u062f\u0641\u062a\u0631 \u0633\u0631\u067e\u0631\u0633\u062a\u06cc \u062f\u0631 \u0637\u0628\u0642\u0647 \u0628\u0627\u0644\u0627.", "store"),
+  makeProject("\u0633\u0627\u0631\u06cc", "madirani", "\u06f1\u06f4\u06f0\u06f1", "completed", "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0645\u0627\u062f\u06cc\u0631\u0627\u0646\u06cc", "\u0641\u0631\u0648\u0634\u06af\u0627\u0647 \u0641\u0639\u0627\u0644 \u0628\u0627 \u062f\u0641\u062a\u0631 \u0633\u0631\u067e\u0631\u0633\u062a\u06cc \u062f\u0631 \u0637\u0628\u0642\u0647 \u0628\u0627\u0644\u0627.", "store"),
 ];
 
 const brandMeta = { madirani: { label: "\u0645\u0627\u062f\u06cc\u0631\u0627\u0646\u06cc", color: "#34383d" }, xpoint: { label: "XPoint", color: "#f26a21" }, xvision: { label: "XVision Shop", color: "#2e74b5" }, exhibition: { label: "\u0646\u0645\u0627\u06cc\u0634\u06af\u0627\u0647", color: "#8b5e3c" } } as const;
@@ -111,7 +111,7 @@ function Metric({ value, label, tone }: { value: number; label: string; tone: st
 
 export default function Home() {
   const [brand, setBrand] = useState<"all" | Brand>("all");
-  const [year, setYear] = useState<"all" | "۱۴۰۴" | "۱۴۰۵">("all");
+  const [year, setYear] = useState<"all" | "۱۴۰۱" | "۱۴۰۴" | "۱۴۰۵">("all");
   const [status, setStatus] = useState<"all" | Status>("all");
   const [selected, setSelected] = useState<Project | null>(null);
   const [mediaPreview, setMediaPreview] = useState<MediaPreview | null>(null);
@@ -133,7 +133,7 @@ export default function Home() {
       <aside className="control-panel" aria-label="فیلترهای نقشه">
         <div className="panel-heading"><span className="section-index">۰۱</span><div><h2>نمای شبکه</h2><p>فیلتر و مقایسه شعب</p></div></div>
         <div className="filter-block"><label>نوع شبکه</label><div className="brand-filters">{(["all", "madirani", "xpoint", "xvision", "exhibition"] as const).map((key) => <button key={key} className={`brand-filter ${brand === key ? "is-active" : ""}`} style={{ "--filter-color": key === "all" ? "#1f2024" : brandMeta[key].color } as React.CSSProperties} onClick={() => { setBrand(key); setSelected(null); }} aria-pressed={brand === key}><i /><span>{key === "all" ? "همه شبکه" : brandMeta[key].label}</span><b>{toFa(key === "all" ? projects.length : key === "exhibition" ? 1 : projects.filter((p) => p.brand === key).length)}</b></button>)}</div></div>
-        <div className="filter-block compact"><label>سال پروژه</label><div className="segmented">{(["all", "۱۴۰۴", "۱۴۰۵"] as const).map((key) => <button key={key} className={year === key ? "is-active" : ""} onClick={() => { setYear(key); setSelected(null); }}>{key === "all" ? "همه" : key}</button>)}</div></div>
+        <div className="filter-block compact"><label>سال پروژه</label><div className="segmented">{(["all", "۱۴۰۱", "۱۴۰۴", "۱۴۰۵"] as const).map((key) => <button key={key} className={year === key ? "is-active" : ""} onClick={() => { setYear(key); setSelected(null); }}>{key === "all" ? "همه" : key}</button>)}</div></div>
         <div className="filter-block compact"><label>وضعیت</label><div className="status-filters">{(["all", "completed", "active"] as const).map((key) => <button key={key} className={status === key ? "is-active" : ""} onClick={() => { setStatus(key); setSelected(null); }}>{key === "all" ? "همه" : statusMeta[key]}</button>)}</div></div>
         <button className="reset-button" onClick={clearFilters}>پاک‌کردن فیلترها <span>↺</span></button><div className="panel-note"><span className="note-dot" /><p>برای مشاهده متراژ، وضعیت و تصاویر روی هر نقطه کلیک کنید.</p></div>
       </aside>
